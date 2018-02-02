@@ -7,5 +7,18 @@ Why yet another spellchecker in Python? I was looking for quick pre-processing c
 
 
 ## Usage
+```
+#add path to hunspell dict and klm model
+    spell_checker = AutoChecker.Builder().dictionary("./resources/hunspell-en_US-2017.01.22/").dictionary_name("en_US").language_model('./resources/wiki_lm_truncated_c.klm').build()
+    auto_checker = AutoChecker(spell_checker)
+    txt = """ It is my beleif, Watson, founded upon my exprience, that the lowest and vilest alleys in Lonon do not present 
+     a more dreadful record of sin than does the smiling and beutiful countryside"""
+    #get a Correction object
+    corrections = auto_checker.correct_spelling(txt)
+    misspellings = corrections.misspellings
+    for misspelling in misspellings:
+        print("misspelled : ", misspelling.word)
+    print("original text ", corrections.original_text)
+    print("corrected text ",corrections.corrected_text)
 
-
+```
