@@ -122,7 +122,7 @@ class AutoChecker(SpellChecker):
 
 def main():
 
-    spell_checker_builder = AutoChecker.Builder().dictionary("./resources/hunspell-en_US-large-2017.01.22/").dictionary_name("en_US-large").build()#.language_model("/users/afaulkner/kenlm/example_texts/test_lm.klm").build()
+    spell_checker_builder = AutoChecker.Builder().dictionary("./resources/hunspell-en_US-large-2017.01.22/").dictionary_name("en_US-large").build()
     auto_checker = AutoChecker(spell_checker_builder)
     #auto_checker.check_word("hooary", 10)
     #auto_checker.check_spelling("Hooary for the man in the yelow jacjet with whtie boots", 10)

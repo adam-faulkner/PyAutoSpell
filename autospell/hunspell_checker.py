@@ -20,7 +20,7 @@ class HunspellChecker(SpellChecker):
         self.suggestion_selector = IFLSuggestionSelector()
         self.TAB = "\t"
         self.dictionary = builder.checker
-        #singletonize this=
+        #TODO: singletonize this
         self.nlp = spacy.load('en')
         self.suggestions_count = 10
 
@@ -52,7 +52,6 @@ class HunspellChecker(SpellChecker):
                 for s in suggestions:
                     rank +=1
                     misspelling.add_suggestion(suggestion_text=s, weight=rank)
-        #print(misspelling.to_string())
         return misspelling
 
     def check_spelling(self, text, suggestions_count,merge=False):
@@ -110,15 +109,3 @@ class HunspellChecker(SpellChecker):
                 factory = TokenizerFactory()
                 self.tokenizer = factory.create_tokenizer("simple")
             return HunspellChecker(self)
-
-
-
-def main():
-
-    spell_check_builder = HunspellChecker.Builder().dictionary("bluespell_dict_27_2_16", "/Users/afaulkner/hunspell_dicts/bluespell-medical-dict-hunspell-2-16/").tokenizer(SimpleTokenizer()).build()
-    checker = HunspellChecker(spell_check_builder)
-    #misspelling = checker.check_word("hoory", 10)
-    misspelling = checker.check_spelling("hooary we can now go out and plya with my friend Bill. Would you like to come?", 10)
-    print(misspelling)
-
-#main()

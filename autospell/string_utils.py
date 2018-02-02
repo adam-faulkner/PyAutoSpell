@@ -12,7 +12,6 @@ class StringUtils(object):
         for c in self.punct_array:
           self.not_check_if_contains_punct.add(c)
         self.non_check_words = set(["'s", "'t"])
-        print(list(self.puncts))
 
     def should_not_check_single_char(self, c : str) -> bool:
         return c not in  string.ascii_lowercase+string.ascii_uppercase

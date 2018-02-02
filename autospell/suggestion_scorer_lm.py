@@ -39,15 +39,8 @@ class SuggestionScorerLM(SuggestionScorer):
              # misspelling_iter.remove();
              #  continue;
             #prevwords and endwords are lists of Word objects
-            print("doing misspelling with text ", missed.word, "and when we get this with indices we get ", sentence[missed.begin:missed.end])
-            print("misspelling begin ", missed.begin)
-            print("misspelling end ", missed.end)
             prevwords = self.tokenizer.tokenize(sentence[: missed.begin])
-            print("prevwords ", [w.word for w in prevwords])
-            print("next misspelling end ", missed.end)
-            print("sending to tokenizer ",sentence[missed.end +1:])
             endwords = self.tokenizer.tokenize(sentence[missed.end+1:])
-            print("endwords ", [w2.word for w2 in endwords])
 
             ppv = ""
             pv = ""
@@ -69,44 +62,30 @@ class SuggestionScorerLM(SuggestionScorer):
                 ppv = ""
 
             suggestions = missed.suggestions
-            #each row is a suggestion, each column is a feature.
-            #feature_map = [0 for s in range(len(suggestions))][0,0]  # [len(next_misspelling).suggestions][None]
             feature_map =  dict(zip(range(len(suggestions)), [[] for i in range(len(suggestions) )]))
-            print(feature_map)
-            print("feedings these suggestions to the model ", [s.text for s in suggestions])
             sugg_size = len(suggestions)
             _feature_size = 0
 
             for sugg_indx, suggestion in enumerate(suggestions):
                 features = [0,0]
-                #feature_index = 0
                 text = suggestion.text
-
-                #print("text ", text)
                 words = self.tokenizer.tokenize(text) #a list of Word objects
-                print("words", [w.word for w in words])
                 head = words[0].word
-                print("head ", head)
                 tail = words[len(words) - 1].word
-                print("tail ", tail)
                 #Feature 1: language model feature
                 if (self.lm != None):
-                    print("getting head prob for ", " ".join([ppv, pv, head]))
                     head_prob = self.lm.score(" ".join([ppv, pv, head]))
                     print(head_prob)
                     tail_prob = self.lm.score(" ".join([tail, nv, nnv]))
-                    print("getting tail prob for "," ".join([tail, nv, nnv]))
                     print(tail_prob)
                     head_plus_tail = math.exp(head_prob + tail_prob)
                     head_plus_tail = math.exp(head_prob + tail_prob) * suggestion.apriori
                     #feature_index+=1
                     feature_map[sugg_indx].append(head_plus_tail)
-                    print("head plus tail ", head_plus_tail)
                     feature_map[sugg_indx] = head_plus_tail
 
             #rank-order the suggestions according to n-gram probability and add to Misspelling
             rank_ordered_suggs = list(reversed(self.__rank_suggestions(feature_map,suggestions)))
-            print(rank_ordered_suggs)
             missed.suggestions= [suggestions[t[0]] for t in rank_ordered_suggs]
             #TODO: Feature 2: Edit distance
             #sim = 1.0 - (editdistance.eval(missed.word, text)/len(missed.word))
