@@ -9,7 +9,7 @@ from autospell.simple_tokenizer import SimpleTokenizer
 from autospell.nlp_utils_factory import TokenizerFactory
 from autospell.misspelling import Misspelling
 from autospell.correction import Correction
-
+import spacy
 
 class HunspellChecker(SpellChecker):
 
@@ -61,9 +61,9 @@ class HunspellChecker(SpellChecker):
         tokens = self.tokenizer.tokenize(text)#(' '.join(t.string for t in sentence))
         print (type(tokens))
         for token  in  tokens:
-            if not token.to_string().strip():
+            if not token.word.strip():
                 continue
-            misspelling = self.check_word(token.to_string().strip(), self.suggestions_count)
+            misspelling = self.check_word(token.word.strip(), self.suggestions_count)
             if not misspelling.suggestions:
                 continue
             if (misspelling == None):
