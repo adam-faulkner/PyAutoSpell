@@ -18,8 +18,8 @@ Why yet another spellchecker in Python? I was looking for quick pre-processing c
     misspellings = corrections.misspellings
     for misspelling in misspellings:
         print("misspelled : ", misspelling.word)
-    print("original text ", corrections.original_text)
-    print("corrected text ",corrections.corrected_text)
+    print("original text: ", corrections.original_text)
+    print("corrected text: ",corrections.corrected_text)
 ```
 Result:
 ```
@@ -27,8 +27,8 @@ misspelled :  beleif
 misspelled :  exprience
 misspelled :  Lonon
 misspelled :  beutiful
-original text   It is my beleif, Watson, founded upon my exprience, that the lowest and vilest alleys in Lonon do not present 
+original text:   It is my beleif, Watson, founded upon my exprience, that the lowest and vilest alleys in Lonon do not present 
      a more dreadful record of sin than does the smiling and beutiful countryside
-corrected text   It is my belief, Watson, founded upon my experience, that the lowest and vilest alleys in London do not present 
+corrected text:   It is my belief, Watson, founded upon my experience, that the lowest and vilest alleys in London do not present 
      a more dreadful record of sin than does the smiling and beautiful countryside
 ```
