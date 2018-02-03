@@ -11,9 +11,9 @@ from sklearn.preprocessing import normalize
 
 class SuggestionScorerLM(SuggestionScorer):
 
-    def __init__(self, tokenizer, lm : LanguageModel):
+    def __init__(self, tokenizer, lm ):
         self.tokenizer = SimpleTokenizer()#tokenizer
-        self.lm = LanguageModel("./resources/wiki_lm_truncated_c.klm")
+        self.lm = LanguageModel(lm)
 
     def __get_context_tokens(self, prevwords, endwords):
         '''
@@ -75,9 +75,7 @@ class SuggestionScorerLM(SuggestionScorer):
                 #Feature 1: language model feature
                 if (self.lm != None):
                     head_prob = self.lm.score(" ".join([ppv, pv, head]))
-                    print(head_prob)
                     tail_prob = self.lm.score(" ".join([tail, nv, nnv]))
-                    print(tail_prob)
                     head_plus_tail = math.exp(head_prob + tail_prob)
                     head_plus_tail = math.exp(head_prob + tail_prob) * suggestion.apriori
                     #feature_index+=1

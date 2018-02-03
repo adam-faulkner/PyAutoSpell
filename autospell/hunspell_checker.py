@@ -43,7 +43,6 @@ class HunspellChecker(SpellChecker):
             misspelling.type = Misspelling.MisspellingType.SPELLING
 
             rank = 0.0
-            print("adding")
             if truncated_suggs:
                 for s in truncated_suggs:
                     rank +=1

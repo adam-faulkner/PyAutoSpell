@@ -122,13 +122,19 @@ class AutoChecker(SpellChecker):
 
 def main():
 
-    spell_checker_builder = AutoChecker.Builder().dictionary("./resources/hunspell-en_US-large-2017.01.22/").dictionary_name("en_US-large").build()
-    auto_checker = AutoChecker(spell_checker_builder)
-    #auto_checker.check_word("hooary", 10)
-    #auto_checker.check_spelling("Hooary for the man in the yelow jacjet with whtie boots", 10)
-    correction_obj = auto_checker.correct_spelling("Hooary in front of the truck and see the man in the yelow jacket who is nice and has whtie boots")
-    print(correction_obj.corrected_text, "\n\n",correction_obj.original_text )
-    #self.suggestion_selector.select(text, misspellings), misspellings)
+    #add path to hunspell dict and klm model
+    spell_checker = AutoChecker.Builder().dictionary("./resources/hunspell-en_US-2017.01.22/").dictionary_name("en_US").language_model('./resources/wiki_lm_truncated_c.klm').build()
+    auto_checker = AutoChecker(spell_checker)
+    txt = """ It is my beleif, Watson, founded upon my exprience, that the lowest and vilest alleys in Lonon do not present 
+     a more dreadful record of sin than does the smiling and beutiful countryside"""
+    #get a Correction object
+    corrections = auto_checker.correct_spelling(txt)
+    misspellings = corrections.misspellings
+    for misspelling in misspellings:
+        print("misspelled : ", misspelling.word)
+    print("original text ", corrections.original_text)
+    print("corrected text ",corrections.corrected_text)
+
 
 
 

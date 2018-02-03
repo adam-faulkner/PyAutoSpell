@@ -39,6 +39,5 @@ class IFLSuggestionSelector(SuggestionSelector):
         #for s in  suggestion_list:
         #    if best == None or s.weight > best.weight:
          #       best = s
-        print("best ", best.text)
         return best
 
