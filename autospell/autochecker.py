@@ -13,7 +13,9 @@ from autospell.nlp_utils_factory import TokenizerFactory
 class AutoChecker(SpellChecker):
 
     def __init__(self, builder):
-
+        '''
+        :param builder:
+        '''
         self.bad_chars_map = {}
         self.spell_checker = None
         self.suggestion_scorer = SuggestionScorer
@@ -33,13 +35,28 @@ class AutoChecker(SpellChecker):
         self.spell_corrector = SpellCorrectorRanked(self.spell_check_obj, self.suggestion_selector, self.suggestion_scorer)
 
     def score_suggestion(self, suggestion : Misspelling.Suggestion, line : str):
+        '''
+        :param suggestion:
+        :param line:
+        :return:
+        '''
         prob = self.suggestion_scorer.score_suggestion(suggestion, line)
         return prob
 
     def check_word(self, text , suggestions_count):
+        '''
+        :param text:
+        :param suggestions_count:
+        :return:
+        '''
         return self.spell_corrector.check_word(text, suggestions_count)
 
     def check_spelling(self, text : str, suggestions_count):
+        '''
+        :param text:
+        :param suggestions_count:
+        :return:
+        '''
         filteredText = text.replace("n\\?t", "n't")
         misspellings = self.spell_corrector.check_spelling(filteredText, suggestions_count)
         print("misspellings ", misspellings)
@@ -54,10 +71,12 @@ class AutoChecker(SpellChecker):
         return False
 
     def correct_spelling(self, text):
+        '''
+        :param text:
+        :return:
+        '''
         correction = self.spell_corrector.correct_spelling(text)
         return correction
-
-
 
     class Builder(object):
         def __init__(self):
@@ -80,7 +99,6 @@ class AutoChecker(SpellChecker):
         def aff_files(self,path):
             self.aff_files.add(path)
             return self
-
 
         def dictionary(self, path):
             self.dictionary = path

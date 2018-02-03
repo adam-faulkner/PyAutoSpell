@@ -1,4 +1,3 @@
-
 from autospell.spellchecker import SpellChecker
 from autospell.correction import Correction
 from autospell.IFL_suggestion_selector import IFLSuggestionSelector
@@ -11,6 +10,11 @@ class SpellCorrectorRanked(SpellChecker):
         self.candidate_scorer = suggestion_scorer
 
     def check_word(self, text, suggestions_count):
+        '''
+        :param text:
+        :param suggestions_count:
+        :return:
+        '''
         return self.spell_checker.check_word(text, suggestions_count)
 
 

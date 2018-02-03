@@ -1,8 +1,10 @@
-
-
 import math
 
 def normalize_by_column_L2_norm(feature_val):
+	'''
+	:param feature_val:
+	:return:
+	'''
 	if feature_val == None:
 		return
 	if len(feature_val) == 0:

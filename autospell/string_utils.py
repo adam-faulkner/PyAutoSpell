@@ -53,16 +53,8 @@ class StringUtils(object):
                 return True
         return False
 
-
     def __is_all_punct(self, w : str) -> bool:
         for i in range(len(w)):
             if w[i]  in self.puncts:
                 return True
         return False
-
-
-def main():
-    su = StringUtils()
-    print(su.should_not_check_string("?"))
-
-#main()

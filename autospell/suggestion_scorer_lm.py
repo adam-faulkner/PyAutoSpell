@@ -1,13 +1,8 @@
 from kenlm import LanguageModel
 from autospell.suggestion_scorer import SuggestionScorer
-from autospell.misspelling import Misspelling
 from autospell.simple_tokenizer import SimpleTokenizer
-from autospell.math_utils import normalize_by_column_L2_norm
 import editdistance
 import math
-import numpy as np
-from sklearn import preprocessing
-from sklearn.preprocessing import normalize
 
 class SuggestionScorerLM(SuggestionScorer):
 
@@ -22,7 +17,6 @@ class SuggestionScorerLM(SuggestionScorer):
         :return:
         '''
         vals = ["<s>", "<s>", "</s>", "</s>"]
-
         if (len(prevwords) > 1):
             vals[0] = prevwords[len(prevwords) - 2].word
         if (len(prevwords) > 0):
@@ -63,8 +57,6 @@ class SuggestionScorerLM(SuggestionScorer):
 
             suggestions = missed.suggestions
             feature_map =  dict(zip(range(len(suggestions)), [[] for i in range(len(suggestions) )]))
-            sugg_size = len(suggestions)
-            _feature_size = 0
 
             for sugg_indx, suggestion in enumerate(suggestions):
                 features = [0,0]
@@ -83,7 +75,7 @@ class SuggestionScorerLM(SuggestionScorer):
                     feature_map[sugg_indx] = head_plus_tail
 
             #rank-order the suggestions according to n-gram probability and add to Misspelling
-            rank_ordered_suggs = list(reversed(self.__rank_suggestions(feature_map,suggestions)))
+            rank_ordered_suggs = list(reversed(self.__rank_suggestions(feature_map)))
             missed.suggestions= [suggestions[t[0]] for t in rank_ordered_suggs]
             #TODO: Feature 2: Edit distance
             #sim = 1.0 - (editdistance.eval(missed.word, text)/len(missed.word))
@@ -114,6 +106,11 @@ class SuggestionScorerLM(SuggestionScorer):
 
 
     def score_suggestion(self, suggestion , sentence ):
+        '''
+        :param suggestion:
+        :param sentence:
+        :return:
+        '''
         misspelling = suggestion.misspelling
         prevwords = self.tokenizer.tokenize(sentence[0 : misspelling.begin])
         endwords = self.tokenizer.tokenize(sentence[misspelling.end : len(sentence )- 1])
@@ -125,7 +122,7 @@ class SuggestionScorerLM(SuggestionScorer):
         totalprob = prob * apriori
         return totalprob
 
-    def __rank_suggestions(self, feature_map, suggestions):
+    def __rank_suggestions(self, feature_map):
         as_ls = feature_map.items()
         return sorted(as_ls, key = lambda tup: tup[1])
 

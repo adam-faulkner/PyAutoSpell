@@ -8,7 +8,6 @@ class SpellChecker(ABC):
     @abstractmethod
     def check_spelling(self, text, num_suggestions):
         '''
-
         :param text:
         :param num_suggestions:
         :return: a list of objects of type misspelling
@@ -18,7 +17,6 @@ class SpellChecker(ABC):
     @abstractmethod
     def check_spelling(self, text, num_suggestions):
         '''
-
         :param text:
         :param num_suggestions:
         :return: a list of objects of type Misspelling
@@ -39,7 +37,6 @@ class SpellChecker(ABC):
     @abstractmethod
     def correct_spelling(self, text):
         '''
-
         :param text:
         :return: object of type Correction
         '''

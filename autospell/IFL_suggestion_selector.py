@@ -1,4 +1,3 @@
-
 from autospell.suggestion_selector import SuggestionSelector
 
 class IFLSuggestionSelector(SuggestionSelector):
@@ -26,7 +25,6 @@ class IFLSuggestionSelector(SuggestionSelector):
             correct = best.text
             sb = sb[:start]+correct+sb[end:]#  .replace(start, end, correct)
             shift += len(correct) + 1 - length
-
         return sb
 
     @staticmethod

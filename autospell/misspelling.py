@@ -8,7 +8,6 @@ class Misspelling(object):
         REPEATEDWORD = 3
 
     def __init__(self):
-
         self.begin = int()
         self.end = int()
         self.word = ""
@@ -25,6 +24,13 @@ class Misspelling(object):
         return self.suggestions
 
     def add_suggestion(self, suggestion=None,suggestion_text : str=None, weight = None, key=None):
+        '''
+        :param suggestion:
+        :param suggestion_text:
+        :param weight:
+        :param key:
+        :return:
+        '''
         if suggestion_text is not None:
             self.suggestions.append(self.Suggestion(suggestion_text,1.0))
         if suggestion is not None:
@@ -41,6 +47,12 @@ class Misspelling(object):
     class Suggestion(object):
 
         def __init__(self, text, weight, checker_name=None, apriori=1.0):
+            '''
+            :param text:
+            :param weight:
+            :param checker_name:
+            :param apriori:
+            '''
             self.text  = text
             self.weight = weight
             self.apriori = apriori

@@ -1,4 +1,3 @@
-
 import hunspell
 from autospell.spellchecker import SpellChecker
 from autospell.string_utils import StringUtils
@@ -14,6 +13,9 @@ import spacy
 class HunspellChecker(SpellChecker):
 
     def __init__(self,builder ):
+        '''
+        :param builder:
+        '''
         self.str_utils = StringUtils()
         self.checker = builder.checker
         self.tokenizer = SimpleTokenizer()#builder.tokenizer
@@ -25,12 +27,26 @@ class HunspellChecker(SpellChecker):
         self.suggestions_count = 10
 
     def check_spelling(self, text, num_suggestions):
+        '''
+        :param text:
+        :param num_suggestions:
+        :return:
+        '''
         pass
 
     def in_dict(self, text):
+        '''
+        :param text:
+        :return:
+        '''
         return False
 
     def check_word(self,token : str, suggestions_count : int) -> Misspelling:
+        '''
+        :param token:
+        :param suggestions_count:
+        :return: Misspelling
+        '''
         misspelling = Misspelling()
         if not self.dictionary.spell(token): #h.spell('incorect') -> False
             suggestions = self.dictionary.suggest(token)
@@ -41,7 +57,6 @@ class HunspellChecker(SpellChecker):
             misspelling.begin = 0
             misspelling.end = len(token)
             misspelling.type = Misspelling.MisspellingType.SPELLING
-
             rank = 0.0
             if truncated_suggs:
                 for s in truncated_suggs:
@@ -54,9 +69,14 @@ class HunspellChecker(SpellChecker):
         return misspelling
 
     def check_spelling(self, text, suggestions_count,merge=False):
-
+        '''
+        :param text:
+        :param suggestions_count:
+        :param merge:
+        :return:
+        '''
         misspelling_list  = list()
-        tokens = self.tokenizer.tokenize(text)#(' '.join(t.string for t in sentence))
+        tokens = self.tokenizer.tokenize(text)
         print (type(tokens))
         for token  in  tokens:
             if not token.word.strip():
@@ -73,12 +93,20 @@ class HunspellChecker(SpellChecker):
             misspelling_list.append(misspelling)
         return misspelling_list
 
-    def correct_spelling(self, text : str):
+    def correct_spelling(self, text : str) -> Correction:
+        '''
+        :param text:
+        :return: Correction
+        '''
         misspellings = self.check_spelling(text, 10)
         return Correction(text, self.suggestion_selector.select(text,
         misspellings), misspellings)
 
     def __filter_misspelling(self, next : Misspelling) -> bool:
+        '''
+        :param next:
+        :return:
+        '''
         #if (len(next.suggestions) == 1 and  len(next.suggestions.iterator().next().text) == 0):
          #   return True
         if (len(next.word) == 1 and self.str_utils.should_not_check_single_char(next.word[0].strip())):
@@ -95,7 +123,6 @@ class HunspellChecker(SpellChecker):
             self.dict_name = None
 
         def dictionary(self, name, path):
-            #self.dictionaries.add(path)
             self.checker = hunspell.Hunspell(name, hunspell_data_dir=path)
             return self
 
