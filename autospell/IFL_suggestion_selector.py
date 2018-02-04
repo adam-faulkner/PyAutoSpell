@@ -7,7 +7,7 @@ class IFLSuggestionSelector(SuggestionSelector):
         '''
         Takes a list of Misspelling objects with rank-ordered suggestions
         and incorporates the top-ranked suggestion into text. Returns
-        the corrected texxt
+        the corrected text.
 
         :param text: str
         :param misspellings: list of Misspelling objects
@@ -23,7 +23,7 @@ class IFLSuggestionSelector(SuggestionSelector):
             end = m.end + shift
             length = m.end - m.begin + 1
             correct = best.text
-            sb = sb[:start]+correct+sb[end:]#  .replace(start, end, correct)
+            sb = sb[:start]+correct+sb[end:]
             shift += len(correct) + 1 - length
         return sb
 
