@@ -20,7 +20,11 @@ One installation pitfall that OSX users should be mindful of when installing the
 ```python3 -m pip install -r requirements.txt --ignore-installed six```
 
 You should confirm that `CyHunspell` and the rest of the dependencies listed in `requirements.txt` have been correctly installed by doing a `pip freeze` 
- 
+
+Then, install `PyAutoSpell` by doing 
+
+```python3 -m pip install .```
+
 Along with the python dependencies included in ```requirements.txt```, PyAutoSpell requires two additional resources: a hunspell dictionary and a [KenLM](https://github.com/kpu/kenlm) language model in binary format. The former is available from the [usual sources](http://wordlist.aspell.net/). (I've also included a recent `hunspell` english dict in the `resources` folder so you can go ahead and use that.) For demonstration purposes I've trained a relatively small (53189736 trigrams) KenLM model on a subset of Wikipedia, which you can access [here](https://www.dropbox.com/s/4p65y9uso9g3zrr/wiki_lm_truncated_c.klm?dl=0).  This model works reasonably well but you'll have to train a larger model if you want better performance. The usage example below assumes that both these files have been placed in the `resources` folder.
 
 
