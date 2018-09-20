@@ -5,6 +5,8 @@ Why yet another spellchecker in Python(YASP)? I was looking for a text pre-proce
 
 ## Setup
 
+The following has been tested on OSX, High Sierra.
+
 After cloning the projectm `cd` to `PyAutoSpell` and then do
 
 ```python3 -m pip install -r requirements.txt```
