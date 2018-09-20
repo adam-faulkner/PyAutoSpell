@@ -42,6 +42,7 @@ misspelled :  esperience
 misspelled :  low3est
 misspelled :  noit
 misspelled :  dr3eadful
->>>     print("corrected text: ",corrections.corrected_text)
+>>> print("corrected text: ",corrections.corrected_text)
+corrected text:  It is my belief, Watson, founded upon my experience, that the lowest and vilest alleys in London do not present a more disregardful record of sin than does the smiling and beautiful countryside
 
 
