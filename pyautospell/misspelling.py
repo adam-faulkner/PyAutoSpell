@@ -31,14 +31,15 @@ class Misspelling(object):
         :param key:
         :return:
         '''
-        if suggestion_text is not None:
-            self.suggestions.append(self.Suggestion(suggestion_text,1.0))
-        if suggestion is not None:
-            self.suggestions.append(suggestion)
-        if suggestion_text is not None and weight is not None:
-            self.suggestions.append(self.Suggestion(suggestion_text, weight))
-        if suggestion_text is not None and weight is not None and key is not None:
-            self.suggestions.append(self.Suggestion(suggestion_text, weight, checker_name=key))
+        if isinstance(suggestion_text, str): 
+            if suggestion_text is not None:
+                self.suggestions.append(self.Suggestion(suggestion_text,1.0))
+            if suggestion is not None:
+                self.suggestions.append(suggestion)
+            if suggestion_text is not None and weight is not None:
+                self.suggestions.append(self.Suggestion(suggestion_text, weight))
+            if suggestion_text is not None and weight is not None and key is not None:
+                self.suggestions.append(self.Suggestion(suggestion_text, weight, checker_name=key))
 
     def to_string(self):
         return "Misspelling [word=" + self.word + ", suggestions=" + " , ".join([s.text for s in self.suggestions]) + "]"
